@@ -1,24 +1,32 @@
-import { useEffect } from "react";
-import io from "Socket.IO-client";
+import { useEffect, useRef } from 'react';
+import io from 'Socket.IO-client';
 let socket;
 
 const Home = () => {
   useEffect(() => socketInitializer(), []);
+  const ref1 = useRef();
 
   const socketInitializer = async () => {
-    await fetch("/api/socket");
+    await fetch('/api/socket');
     socket = io();
 
-    socket.on("connect", () => {
-      console.log("connected");
+    socket.on('connect', () => {
+      console.log('IO connected');
     });
 
-    socket.on("chat", (data) => {
-      console.log("ha llegado un mensaje: ", data);
+    socket.on('playMusic', () => {
+      console.log('Play sound');
+      ref1.current.src =
+        'https://freesound.org/data/previews/384/384188_5121236-lq.mp3';
+      ref1.current.play();
     });
   };
 
-  return null;
+  return (
+    <div>
+      <audio src="" ref={ref1} />
+    </div>
+  );
 };
 
 export default Home;
