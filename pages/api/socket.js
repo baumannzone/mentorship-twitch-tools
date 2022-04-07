@@ -10,7 +10,7 @@ const SocketHandler = (req, res) => {
     },
     identity: {
       username: 'botmannzone',
-      password: process.env.TWITCH_OAUTH,
+      password: `oauth:${process.env.TWITCH_OAUTH}`,
     },
     channels: ['baumannzone'],
   });
