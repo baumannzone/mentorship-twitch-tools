@@ -1,5 +1,5 @@
-import { Server } from "Socket.IO";
-const tmi = require("tmi.js");
+import { Server } from 'Socket.IO';
+const tmi = require('tmi.js');
 
 const SocketHandler = (req, res) => {
   const client = new tmi.client({
@@ -9,25 +9,25 @@ const SocketHandler = (req, res) => {
       secure: true,
     },
     identity: {
-      username: "botmannzone",
-      password: "oauth:huhwdyv8k23j0vbu55jkkxtfpxa7wa",
+      username: 'botmannzone',
+      password: process.env.TWITCH_OAUTH,
     },
-    channels: ["baumannzone"],
+    channels: ['baumannzone'],
   });
 
   client.connect();
 
   if (res.socket.server.io) {
-    console.log("Socket is already running");
+    console.log('Socket is already running');
   } else {
-    console.log("Socket is initializing");
+    console.log('Socket is initializing');
     const io = new Server(res.socket.server);
     res.socket.server.io = io;
 
-    client.on("message", (channel, tags, message, self) => {
+    client.on('message', (channel, tags, message, self) => {
       if (self) return;
 
-      io.emit("chat", { channel, tags, message });
+      io.emit('chat', { channel, tags, message });
     });
   }
   res.end();
