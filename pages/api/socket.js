@@ -34,12 +34,12 @@ const SocketHandler = (req, res) => {
       console.log(message);
       console.log(tags);
 
-      // if (message === 'aa') {
-      //   twitchClient.say(
-      //     'baumannzone',
-      //     `El user ${tags.username} ha hecho una accion, y ha dicho ${message}`
-      //   );
-      // }
+      if (message === 'aa') {
+        twitchClient.say(
+          'baumannzone',
+          `El user ${tags.username} ha hecho una accion, y ha dicho ${message}`
+        );
+      }
 
       // if (message.startsWith('!')) {
       //   const command = message.split(' ')[0].substring(1);
@@ -48,8 +48,9 @@ const SocketHandler = (req, res) => {
       //   // commands[command](channel, tags, args);
       // }
 
-      if (message === '!music') {
-        io.emit('playMusic');
+      if (message.startsWith('!')) {
+        const type = message.substring(1);
+        io.emit('play', { type });
       }
     });
   }
