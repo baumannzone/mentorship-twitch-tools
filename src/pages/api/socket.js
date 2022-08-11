@@ -1,5 +1,7 @@
 import { Server } from 'Socket.IO';
 import tmi from 'tmi.js';
+import { audioKeys } from '../../constants/audios';
+import { events } from '../../constants/eventNames';
 
 const twitchClient = new tmi.client({
   options: { debug: true },
@@ -50,7 +52,9 @@ const SocketHandler = (req, res) => {
 
       if (message.startsWith('!')) {
         const type = message.substring(1);
-        io.emit('play', { type });
+        if (audioKeys.includes(type)) {
+          io.emit(events.PLAY_AUDIO, { type });
+        }
       }
     });
   }

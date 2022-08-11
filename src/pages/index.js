@@ -1,12 +1,10 @@
 import { useEffect, useRef } from 'react';
 import io from 'Socket.IO-client';
-let socket;
 
-const sounds = {
-  cock: 'https://freesound.org/data/previews/384/384188_5121236-lq.mp3',
-  claps: 'https://cdn.freesound.org/previews/425/425663_8521965-lq.mp3',
-  boo: 'https://cdn.freesound.org/previews/353/353925_4161250-lq.mp3',
-};
+import { audios } from '../constants/audios';
+import { events } from '../constants/eventNames';
+
+let socket;
 
 const Home = () => {
   useEffect(() => socketInitializer(), []);
@@ -20,9 +18,9 @@ const Home = () => {
       console.log('IO connected');
     });
 
-    socket.on('play', ({ type }) => {
+    socket.on(events.PLAY_AUDIO, ({ type }) => {
       console.log('Play sound:', type);
-      ref1.current.src = sounds[type];
+      ref1.current.src = audios[type];
       ref1.current.play();
     });
   };
